@@ -29,7 +29,7 @@ module FilingProcessor
     end
 
     def tax_year
-      @tax_year ||= document.dig(['Return', 'ReturnHeader', 'TaxYear'])
+      @tax_year ||= document.dig(['Return', 'ReturnHeader', 'TaxYear']) || document.dig(['Return', 'ReturnHeader', 'TaxYr'])
     end
   end
 end
