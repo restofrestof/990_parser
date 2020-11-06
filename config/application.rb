@@ -26,6 +26,8 @@ module RailsZen
     # Clear hosts in Rails 6. No need to whitelist unless you
     # really want to.
     config.hosts.clear
+    config.time_zone = 'Eastern Time (US & Canada)'
+    config.active_record.default_timezone = :local
 
     # Settings in config/environments/* take precedence over those specified
     # here.
