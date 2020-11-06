@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_011237) do
+ActiveRecord::Schema.define(version: 2020_11_06_034044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -45,12 +45,27 @@ ActiveRecord::Schema.define(version: 2020_11_06_011237) do
   create_table "awards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.float "amount", null: false
     t.string "purpose", null: false
+    t.integer "tax_year", null: false
     t.uuid "granter_id", null: false
+    t.uuid "filing_id", null: false
     t.uuid "recipient_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["filing_id"], name: "index_awards_on_filing_id"
     t.index ["granter_id"], name: "index_awards_on_granter_id"
     t.index ["recipient_id"], name: "index_awards_on_recipient_id"
+  end
+
+  create_table "filings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "status", null: false
+    t.uuid "granter_id"
+    t.integer "awards_processed"
+    t.integer "tax_year"
+    t.json "award_errors"
+    t.text "original_file"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["granter_id"], name: "index_filings_on_granter_id"
   end
 
   create_table "granters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -64,13 +79,26 @@ ActiveRecord::Schema.define(version: 2020_11_06_011237) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "process_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "status", null: false
+    t.uuid "granter_id"
+    t.integer "awards_processed"
+    t.integer "tax_year"
+    t.json "award_errors"
+    t.text "original_file"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["granter_id"], name: "index_process_events_on_granter_id"
+  end
+
   create_table "recipients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "ein", null: false
-    t.string "name", null: false
+    t.string "ein"
+    t.string "name"
     t.string "address"
     t.string "city"
     t.string "state"
     t.string "zip_code"
+    t.string "section"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

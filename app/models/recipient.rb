@@ -1,6 +1,5 @@
 class Recipient < ActiveRecord::Base
-  has_many :awards, inverse_of: :recipient
+  has_many :awards
   has_many :granters, through: :awards, inverse_of: :recipients
-
-  validates :name, :ein, presence: true
+  has_many :filings, through: :awards, inverse_of: :recipients
 end
