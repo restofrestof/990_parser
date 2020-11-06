@@ -1,6 +1,6 @@
 module V1
   module Entities
-    class Filing < Grape::Entity
+    class FilingIndex < Grape::Entity
       expose :id
       expose :tax_year
       expose :awards_processed

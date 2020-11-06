@@ -9,6 +9,7 @@ module V1
       expose :zip_code
       expose :section
       expose :id
+      expose :awards, using: V1::Entities::Award
     end
   end
 end

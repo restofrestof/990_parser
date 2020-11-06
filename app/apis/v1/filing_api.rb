@@ -10,7 +10,24 @@ module V1
       route_param :id do
         get do
           filing = Filing.find(params[:id])
-          present filing, using: V1::Entities::Filing
+          present filing, with: V1::Entities::Filing
+        end
+      end
+      desc 'Create new filing'
+      params do
+        requires :filing_url
+      end
+      get do
+        uri = URI(params[:filing_id])
+        if uri.is_a?(URI::HTTP) && !uri.host.nil?
+          filing = FilingProcessor.new(URL(uri)).filing
+          if filing.status == Filing::COMPLETED_STATUS
+            present filing, with: V1::Entities::FilingCreate
+          else
+            error! filing.status, 400
+          end
+        else
+          error! 'Invalid URL', 400
         end
       end
     end

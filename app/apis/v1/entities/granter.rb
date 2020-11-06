@@ -1,6 +1,6 @@
 module V1
   module Entities
-    class Filing < Grape::Entity
+    class Granter < Grape::Entity
       expose :name
       expose :ein
       expose :address

@@ -4,7 +4,9 @@ module V1
       expose :id
       expose :amount
       expose :purpose
-      expose :recipient, using: V1::Entities::Recipient
+      expose :granter_id
+      expose :filing_id
+      expose :recipient_id
     end
   end
 end

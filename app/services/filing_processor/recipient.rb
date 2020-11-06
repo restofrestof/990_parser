@@ -13,7 +13,7 @@ module FilingProcessor
       ein = dig(['EINOfRecipient'])
       address = dig(['AddressUS', 'AddressLine1'])
       city = dig(['AddressUS', 'City'])
-      state = dig(['AddressUS', 'Statue'])
+      state = dig(['AddressUS', 'State'])
       zip_code = dig(['AddressUS', 'ZIPCode'])
       section = dig(['IRCSection'])
 
